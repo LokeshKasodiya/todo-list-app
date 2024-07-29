@@ -5,7 +5,6 @@ const fs = require('fs');
 const FILE_PATH = './todos.json';
 const COUNTER_PATH = './counter.json';
 
-// Helper function to read todos from file
 const readTodosFromFile = () => {
   if (!fs.existsSync(FILE_PATH)) {
     fs.writeFileSync(FILE_PATH, JSON.stringify([]));
@@ -20,12 +19,10 @@ const readTodosFromFile = () => {
   }
 };
 
-// Helper function to write todos to file
 const writeTodosToFile = (todos) => {
   fs.writeFileSync(FILE_PATH, JSON.stringify(todos, null, 2));
 };
 
-// Helper function to read the counter from file
 const readCounterFromFile = () => {
   if (!fs.existsSync(COUNTER_PATH)) {
     fs.writeFileSync(COUNTER_PATH, JSON.stringify({ lastId: 0 }));
@@ -40,7 +37,6 @@ const readCounterFromFile = () => {
   }
 };
 
-// Helper function to write the counter to file
 const writeCounterToFile = (counter) => {
   fs.writeFileSync(COUNTER_PATH, JSON.stringify({ lastId: counter }));
 };
@@ -69,7 +65,6 @@ router.get('/', (req, res) => {
   res.json(todos);
 });
 
-// Add Todo
 router.post('/', (req, res) => {
   const todos = readTodosFromFile();
   let counter = readCounterFromFile();
@@ -82,7 +77,6 @@ router.post('/', (req, res) => {
   res.status(201).json(newTodo);
 });
 
-// Update Todo
 router.put('/:id', (req, res) => {
   const todos = readTodosFromFile();
   const index = todos.findIndex(todo => todo.id === req.params.id);
@@ -95,7 +89,6 @@ router.put('/:id', (req, res) => {
   }
 });
 
-// Delete Todo
 router.delete('/:id', (req, res) => {
   let todos = readTodosFromFile();
   todos = todos.filter(todo => todo.id !== req.params.id);
@@ -103,7 +96,6 @@ router.delete('/:id', (req, res) => {
   res.status(204).json({ message: 'Todo deleted successfully' });
 });
 
-// Mark as Done
 router.patch('/:id/done', (req, res) => {
   const todos = readTodosFromFile();
   const index = todos.findIndex(todo => todo.id === req.params.id);
