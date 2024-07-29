@@ -6,8 +6,6 @@ const PORT = 3000;
 
 app.use(bodyParser.json());
 app.use('/api/todos', todosRoutes);
-
-// Root route
 app.get('/', (req, res) => {
   res.send('Welcome to the Todo List API!');
 });
